@@ -34,8 +34,10 @@ sudo pip3 install pyserial
 sudo pip3 install twilio
 
 
-# download greenery app
-sudo git clone https://github.com/jeffleary00/greenery.git /var/www/greenery
+# download greenery apps
+cd ~
+sudo git clone https://github.com/greeneryguru/greenery-install.git
+sudo git clone https://github.com/greeneryguru/greenery-web.git /var/www/greenery
 
 
 # configure web interface uwsgi/nginx
@@ -44,12 +46,12 @@ sudo chgrp -R www-data /var/www
 if [ -f /etc/nginx/sites-available/default ]; then
    sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 fi
-sudo cp /var/www/greenery/install/www/nginx.default /etc/nginx/sites-available/default
+sudo cp ~/greenery-install/install/www/nginx.default /etc/nginx/sites-available/default
 if [ -f /etc/nginx/sites-enabled/default ]; then
    sudo rm /etc/nginx/sites-enabled/default
 fi
 sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo cp /var/www/greenery/install/www/uwsgi.ini /etc/uwsgi/apps-available/uwsgi.ini
+sudo cp ~/greenery-install/install/www/uwsgi.ini /etc/uwsgi/apps-available/uwsgi.ini
 if [ -f /etc/uwsgi/apps-enabled/uwsgi.ini ]; then
    sudo rm /etc/uwsgi/apps-enabled/uwsgi.ini
 fi
@@ -75,8 +77,8 @@ sudo service nginx restart
 sudo ls -l /var/spool/cron/crontabs/www-data
 catch=$?
 if (( catch )); then
-    cd /var/www/greenery
-    sudo cp ./install/cron/www.cron /var/spool/cron/crontabs/www-data
+    cd ~
+    sudo cp ./greenery-install/install/cron/www.cron /var/spool/cron/crontabs/www-data
     sudo chown www-data /var/spool/cron/crontabs/www-data
     sudo chmod 600 /var/spool/cron/crontabs/www-data
 fi
