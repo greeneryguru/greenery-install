@@ -1,0 +1,17 @@
+GREENERY_WEB=/var/www/greenery
+
+# poll sensors for data
+* * * * * $GREENERY_WEB/greenery/bin/poll.py >>/var/tmp/cron.log 2>&1
+
+# check for scheduled actions
+* * * * * $GREENERY_WEB/greenery/bin/scheduler.py >>/var/tmp/cron.log 2>&1
+
+# check for required threshold actions
+* * * * * $GREENERY_WEB/greenery/bin/actions.py >>/var/tmp/cron.log 2>&1
+
+# aggregate previous hours measurement data
+0 * * * * $GREENERY_WEB/greenery/bin/aggregate.py >>/var/tmp/cron.log 2>&1
+
+# purge expired measurement data
+5 * * * * $GREENERY_WEB/greenery/bin/purge.py >>/var/tmp/cron.log 2>&1
+

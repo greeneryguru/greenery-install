@@ -1,0 +1,19 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+    
+    server_name greenery;
+    
+    location / {
+        include     uwsgi_params;
+        uwsgi_pass  unix:///var/www/greenery.sock;
+    }
+    
+    location /static/ {
+        root /var/www/greenery/greenery;
+    }
+    
+    location ~ /\.ht {
+        deny all;
+    } 
+}
