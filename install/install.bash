@@ -46,12 +46,12 @@ sudo chgrp -R www-data /var/www
 if [ -f /etc/nginx/sites-available/default ]; then
    sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
 fi
-sudo cp ~/greenery-install/install/www/nginx.default /etc/nginx/sites-available/default
+sudo cp ~/potnanny-install/install/www/nginx.default /etc/nginx/sites-available/default
 if [ -f /etc/nginx/sites-enabled/default ]; then
    sudo rm /etc/nginx/sites-enabled/default
 fi
 sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo cp ~/greenery-install/install/www/uwsgi.ini /etc/uwsgi/apps-available/uwsgi.ini
+sudo cp ~/potnanny-install/install/www/uwsgi.ini /etc/uwsgi/apps-available/uwsgi.ini
 if [ -f /etc/uwsgi/apps-enabled/uwsgi.ini ]; then
    sudo rm /etc/uwsgi/apps-enabled/uwsgi.ini
 fi
@@ -68,17 +68,17 @@ sudo ls -l /var/spool/cron/crontabs/www-data
 catch=$?
 if (( catch )); then
     cd ~
-    sudo cp ./greenery-install/install/cron/www.cron /var/spool/cron/crontabs/www-data
+    sudo cp ./potnanny-install/install/cron/www.cron /var/spool/cron/crontabs/www-data
     sudo chown www-data /var/spool/cron/crontabs/www-data
     sudo chmod 600 /var/spool/cron/crontabs/www-data
 fi
 
 
 # error log file that app should write to
-sudo ls -l /var/tmp/greenery.errors.log
+sudo ls -l /var/tmp/potnanny.errors.log
 catch=$?
 if (( catch )); then
-    sudo -u www-data touch /var/tmp/greenery.errors.log
+    sudo -u www-data touch /var/tmp/potnanny.errors.log
 fi
 
 
