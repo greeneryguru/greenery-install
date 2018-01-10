@@ -1,2 +1,2 @@
-# greenery-install
-installation scripts for greenery guru raspberry pi system
+# potnanny-install
+installation scripts for the Pot Nanny Raspberry Pi system

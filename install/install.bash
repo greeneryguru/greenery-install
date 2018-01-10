@@ -2,7 +2,7 @@
 
 #
 # 
-# Raspberry Pi setup script for greenery.guru enviro automation tool.
+# Raspberry Pi setup script.
 #
 #
 
@@ -36,8 +36,8 @@ sudo pip3 install twilio
 
 # download greenery apps
 cd ~
-sudo git clone https://github.com/greeneryguru/greenery-install.git
-sudo git clone https://github.com/greeneryguru/greenery-web.git /var/www/greenery
+sudo git clone https://github.com/greeneryguru/potnanny-install.git
+sudo git clone https://github.com/greeneryguru/potnanny-web.git /var/www/potnanny
 
 
 # configure web interface uwsgi/nginx
@@ -56,16 +56,6 @@ if [ -f /etc/uwsgi/apps-enabled/uwsgi.ini ]; then
    sudo rm /etc/uwsgi/apps-enabled/uwsgi.ini
 fi
 sudo ln -s /etc/uwsgi/apps-available/uwsgi.ini /etc/uwsgi/apps-enabled/uwsgi.ini
-
-
-# inital app db
-sudo ls -l /var/www/greenery/app.db
-catch=$?
-if (( catch )); then
-    sudo cp /var/www/greenery/initial.db /var/www/greenery/app.db
-    sudo chown www-data /var/www/greenery/app.db
-    sudo chgrp www-data /var/www/greenery/app.db
-fi
 
 
 # restart services

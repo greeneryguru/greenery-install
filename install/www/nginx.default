@@ -2,15 +2,15 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
     
-    server_name greenery;
+    server_name potnanny;
     
     location / {
         include     uwsgi_params;
-        uwsgi_pass  unix:///var/www/greenery.sock;
+        uwsgi_pass  unix:///var/www/potnanny.sock;
     }
     
     location /static/ {
-        root /var/www/greenery/greenery;
+        root /var/www/potnanny/potnanny;
     }
     
     location ~ /\.ht {
