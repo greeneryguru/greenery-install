@@ -9,17 +9,16 @@
 # base installs
 sudo apt-get update
 sudo apt-get -y install build-essential
+sudo apt-get -y install libbluetooth-dev
 sudo apt-get -y install sqlite3
 sudo apt-get -y install python3-dev
 sudo apt-get -y install python3-cryptography
 sudo apt-get -y install python3-pip
 
-
 # webserver
 sudo apt-get -y install nginx
 sudo apt-get -y install uwsgi
 sudo apt-get -y install uwsgi-plugin-python3
-
 
 # flask requirements
 sudo pip3 install requests
@@ -27,12 +26,16 @@ sudo pip3 install flask
 sudo pip3 install flask-login
 sudo pip3 install flask-wtf
 sudo pip3 install flask-sqlalchemy
+sudo pip3 install flask-testing
 sudo pip3 install wtforms_components
 sudo pip3 install sqlalchemy-migrate
 sudo pip3 install sqlalchemy_utils
 sudo pip3 install pyserial
 sudo pip3 install twilio
-
+sudo pip3 install nose2
+sudo pip3 install bluepy
+sudo pip3 uninstall daemon
+sudo pip3 install python-daemon
 
 # download greenery apps
 cd ~
@@ -63,6 +66,10 @@ sudo service uwsgi restart
 sudo service nginx restart
 
 
+# create directory for bt-le scanner service/daemon
+sudo mkdir /var/lib/btlescan
+ 
+ 
 # install base crontab file for www-data
 sudo ls -l /var/spool/cron/crontabs/www-data
 catch=$?
@@ -80,10 +87,6 @@ catch=$?
 if (( catch )); then
     sudo -u www-data touch /var/tmp/potnanny.errors.log
 fi
-
-
-# add www-data to group dialout, so /dev/ttyUSB is usable
-sudo adduser www-data dialout
 
 
 # success?
