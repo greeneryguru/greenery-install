@@ -23,24 +23,24 @@ sudo apt-get -y install uwsgi-plugin-python3
 # flask requirements
 sudo pip3 install requests
 sudo pip3 install flask
-sudo pip3 install flask-login
 sudo pip3 install flask-wtf
 sudo pip3 install flask-sqlalchemy
 sudo pip3 install flask-testing
 sudo pip3 install wtforms_components
 sudo pip3 install sqlalchemy-migrate
 sudo pip3 install sqlalchemy_utils
-sudo pip3 install pyserial
 sudo pip3 install twilio
 sudo pip3 install nose2
 sudo pip3 install bluepy
-sudo pip3 uninstall daemon
-sudo pip3 install python-daemon
+# sudo pip3 uninstall daemon
+# sudo pip3 install python-daemon
+sudo pip3 install flake8
+
 
 # download greenery apps
 cd ~
-sudo git clone https://github.com/greeneryguru/potnanny-install.git
-sudo git clone https://github.com/greeneryguru/potnanny-web.git /var/www/potnanny
+sudo git clone https://github.com/jeffleary00/potnanny-install.git
+sudo git clone https://github.com/jeffleary00/potnanny-web.git /var/www/potnanny
 
 
 # configure web interface uwsgi/nginx
