@@ -26,15 +26,17 @@ sudo pip3 install flask
 sudo pip3 install flask-wtf
 sudo pip3 install flask-sqlalchemy
 sudo pip3 install flask-testing
+sudo pip3 install flask-login
 sudo pip3 install wtforms_components
 sudo pip3 install sqlalchemy-migrate
 sudo pip3 install sqlalchemy_utils
-sudo pip3 install twilio
 sudo pip3 install nose2
 sudo pip3 install bluepy
 # sudo pip3 uninstall daemon
 # sudo pip3 install python-daemon
 sudo pip3 install flake8
+sudo pip3 install twilio
+sudo pip3 install miflora
 
 
 # download greenery apps
