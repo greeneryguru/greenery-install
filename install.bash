@@ -73,6 +73,7 @@ sudo pip3 install -e .
 
 echo "SET PERMISSIONS"
 echo "---------------------------------------------------------"
+sudo mkdir /var/www/potnanny/log
 sudo touch /var/www/potnanny/log/poll.log
 sudo chmod 660 /var/www/potnanny/log/poll.log
 sudo usermod -a -G www-data $USER
