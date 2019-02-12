@@ -1,7 +1,0 @@
-FLASK_APP=/var/www/potnanny
-
-# poll sensors for data
-* * * * * $FLASK_APP/potnanny/scripts/poll.py >>/var/tmp/cron.log 2>&1
-
-# check for required threshold actions
-* * * * * $FLASK_APP/potnanny/scripts/actions.py >>/var/tmp/cron.log 2>&1
