@@ -73,6 +73,7 @@ sudo pip3 install -e .
 
 echo "SET PERMISSIONS"
 echo "---------------------------------------------------------"
+sudo touch /var/www/potnanny/sqlite.db
 sudo mkdir /var/www/potnanny/log
 sudo touch /var/www/potnanny/log/poll.log
 sudo chmod 660 /var/www/potnanny/log/poll.log
@@ -80,6 +81,7 @@ sudo usermod -a -G www-data $USER
 cd /var/www
 sudo chown -R www-data potnanny
 sudo chgrp -R www-data potnanny
+sudo chmod 660 /var/www/potnanny/sqlite.db
 
 
 echo "RESTART WEB SERVICES"
