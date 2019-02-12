@@ -51,7 +51,7 @@ sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 echo "CONFIGURE LOGROTATE"
 echo "---------------------------------------------------------"
-sudo bash sh -c 'cat ./logrotate.conf >>/etc/logrotate.conf'
+sudo sh -c 'cat ./logrotate.conf >>/etc/logrotate.conf'
 
 
 echo "INSTALL WIRINGPI FROM SOURCE"
@@ -66,7 +66,7 @@ git pull origin
 echo "INSTALL POTNANNY FROM SOURCE"
 echo "---------------------------------------------------------"
 cd /var/www
-git clone https://github.com/jeffleary00/potnanny.git
+sudo git clone https://github.com/jeffleary00/potnanny.git
 cd potnanny
 sudo pip3 install -e .
 
