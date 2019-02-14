@@ -2,7 +2,7 @@
 
 # -----------------------------------------------------------------------------
 #
-# Run this as the 'pi' user (or other superuser) on Raspberry Pi
+# Run this as the 'pi' user on Raspberry Pi
 #
 # -----------------------------------------------------------------------------
 
@@ -49,6 +49,15 @@ sudo cp ./nginx/default /etc/uwsgi/sites-available
 sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 
+echo "CONFIGURE DIRECTORIES"
+echo "---------------------------------------------------------"
+sudo mkdir /var/log/potnanny
+sudo touch /var/log/potnanny/poll.log
+sudo chown $USER /var/log/potnanny/poll.log
+sudo chgrp www-data /var/log/potnanny/poll.log
+sudo chmod 664 /var/log/potnanny/poll.log
+
+
 echo "CONFIGURE LOGROTATE"
 echo "---------------------------------------------------------"
 sudo sh -c 'cat ./logrotate.conf >>/etc/logrotate.conf'
@@ -73,11 +82,8 @@ sudo pip3 install -e .
 
 echo "SET PERMISSIONS"
 echo "---------------------------------------------------------"
-sudo touch /var/www/potnanny/sqlite.db
-sudo mkdir /var/www/potnanny/log
-sudo touch /var/www/potnanny/log/poll.log
-sudo chmod 660 /var/www/potnanny/log/poll.log
 sudo usermod -a -G www-data $USER
+sudo touch /var/www/potnanny/sqlite.db
 cd /var/www
 sudo chown -R www-data potnanny
 sudo chgrp -R www-data potnanny
@@ -97,6 +103,7 @@ sudo cat /var/spool/cron/crontabs/$USER | grep "poll.py"
 if [ $? -ne 0 ]; then
     sudo sh -c "echo '* * * * * /var/www/potnanny/bin/poll.py' >>/var/spool/cron/crontabs/$USER"
 fi
+sudo chmod 0600 /var/spool/cron/crontabs/$USER
 
 
 echo "========================================================="
