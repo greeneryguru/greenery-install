@@ -31,13 +31,7 @@ sudo apt-get -y install nodejs npm
 echo "---------------------------------------------------------"
 echo "INSTALL BASE PYTHON MODULES"
 echo "---------------------------------------------------------"
-sudo pip3 install sqlalchemy
-sudo pip3 install marshmallow
-sudo pip3 install flask
-sudo pip3 install flask-restful
-sudo pip3 install flask-jwt-extended
-sudo pip3 install bluepy
-sudo pip3 install btlewrap
+sudo pip3 install virtualenv
 
 
 echo "---------------------------------------------------------"
@@ -48,6 +42,12 @@ git clone git://git.drogon.net/wiringPi
 cd wiringPi
 git pull origin
 sudo ./build
+
+
+echo "---------------------------------------------------------"
+echo "ADD USER TO www-data GROUP"
+echo "---------------------------------------------------------"
+sudo usermod -a -G www-data $USER
 
 
 echo "---------------------------------------------------------"
@@ -92,16 +92,31 @@ done
 echo "---------------------------------------------------------"
 echo "INSTALL POTNANNY CORE"
 echo "---------------------------------------------------------"
-# no-binary must be used, to get around weird bug in setuptools, where all
-# data_files are installed relative to package, in system python dir.
+# "--no-binary" must be used, to get around weird bug in setuptools, where all
+# data_files are installed relative to package, in system python dir. this
+# behavior is NOT what we want.
 # This flag ensures non-package files get installed to correct filesystem paths.
-sudo pip3 install --no-binary :all: potnanny-core==0.3.0
+sudo pip3 install --no-binary :all: potnanny-core==0.2.7
 
 
 echo "---------------------------------------------------------"
-echo "INSTALL POTNANNY API"
+echo "INSTALL WWW POTNANNY API"
 echo "---------------------------------------------------------"
-sudo pip3 install potnanny-api==0.3.0
+cd /var/www
+sudo git clone https://github.com/jeffleary00/potnanny-api.git
+sudo chown -R www-data potnanny-api
+sudo chgrp -R www-data potnanny-api
+
+
+# echo "---------------------------------------------------------"
+# echo "INSTALL POTNANNY SINGLE PAGE APPLICATION"
+# echo "---------------------------------------------------------"
+# cd ~
+# git clone https://github.com/jeffleary00/potnanny-spa.git
+# cd potnanny-spa
+# npm install
+# npm run build
+# sudo cp dist/* /var/www/html
 
 
 echo "---------------------------------------------------------"
@@ -128,15 +143,6 @@ sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 
 echo "---------------------------------------------------------"
-echo "SET WWW PERMISSIONS"
-echo "---------------------------------------------------------"
-sudo usermod -a -G www-data $USER
-cd /var/www
-sudo chown -R www-data potnanny
-sudo chgrp -R www-data potnanny
-
-
-echo "---------------------------------------------------------"
 echo "SET ADDITIONAL PERMISSIONS"
 echo "---------------------------------------------------------"
 DIRLIST="
@@ -145,7 +151,7 @@ DIRLIST="
 for DIR in $DIRLIST
 do
   sudo chgrp -R www-data $DIR
-  sudo chmod -R 774 $DIR
+  sudo chmod -R 775 $DIR
 done
 
 FLIST="
@@ -190,6 +196,9 @@ DHPID=$!
 echo "---------------------------------------------------------"
 echo "SETUP INITIAL POTNANNY DATABASE"
 echo "---------------------------------------------------------"
+touch /var/local/potnanny/potnanny.db
+sudo chgrp www-data /var/local/potnanny/potnanny.db
+sudo chmod 664 /var/local/potnanny/potnanny.db
 potnanny db init
 
 
