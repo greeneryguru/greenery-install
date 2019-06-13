@@ -267,7 +267,7 @@ echo "---------------------------------------------------------"
 if [ ! -e /etc/profile.d/flask.sh ]; then
   sudo touch /etc/profile.d/flask.sh
   KEYLIST="
-    SECRET_KEY
+    FLASK_SECRET_KEY
     JWT_SECRET_KEY
   "
   for KEY in $KEYLIST
